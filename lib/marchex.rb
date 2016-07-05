@@ -23,10 +23,10 @@ module Marchex
         
       end
 
-      def client_ad_list(client_id)
-       response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'ad.list.all', 'params' => [client_id, {'status' => 'active'}]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
+      def client_ad_list(client_id, status ='')
+        response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'ad.list.all', 'params' => [client_id, {'status' => status.downcase}]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
 
-      end    
+      end  
       
       def parse_json(response)
         body = JSON.parse(response.to_str) if response.code == 200

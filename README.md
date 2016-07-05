@@ -26,8 +26,8 @@ Create a connection using your Marchex account email address and password:
 # @testcon.account_list
     Retrieves all accounts       
 
-# @testcon.client_ad_list(client_id)
-    Retrieves all ad campaigns for a client account 
+# @testcon.client_ad_list(client_id, status)
+    Retrieves all ad campaigns for a client account. If disabled or active is passed for the status, only those ads will be returned. 
       
 # @testcon.ad_forward_list(campaign_id)
     Retrieves all forwarding numbers for a single ad campaign
