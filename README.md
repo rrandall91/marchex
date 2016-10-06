@@ -42,7 +42,10 @@ Create a connection using your Marchex account email address and password:
     Grab permissions to see if a user is an admin
       
 # @testcon.ad_custom_define(acc_id,field_number, field_name, field_type, field_values)
-    Define a custom field for an ad    
+    Define a custom field for an ad 
+
+# @ad_custom_set(acc_id, campaign_id, field_name, field_value)   
+    Set the value of a custom field. For boolean, use yes/no
 
 ## Development
 

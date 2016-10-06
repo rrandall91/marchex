@@ -55,6 +55,11 @@ module Marchex
       def ad_custom_define(acc_id,field_number, field_name, field_type, field_values)
         response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'ad.custom.define', 'params' => [acc_id,field_number, field_name, field_type, field_values]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
        return response.body["result"]
+      end
+
+      def ad_custom_set(acc_id, campaign_id, field_name, field_value)
+        response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'ad.custom.set', 'params' => [acc_id,campaign_id, field_name, field_value]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
+        return response.body["result"]
       end 
 
   end
