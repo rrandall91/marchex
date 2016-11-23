@@ -62,9 +62,28 @@ module Marchex
         return response.body["result"]
       end 
 
+      def call_search ( opts = {})
+        response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'call.search', 'params' => [opts[:acct_id], {'start' => opts[:start_date], 'end' => opts[:end_date]} ]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
+        return response.body["result"]
+      end
+
   end
 end
 
+ # response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'call.search', 'params' => [opts[:acc_id], :start => {opts[:start], :end => opts[:end], :assto => opts[:assto], :call_boundary => opts[:call_boundary], :callerid => opts[:callerid], :cmpid => opts[:cmpid], :dispo => opts[:dispo], :dna_class => opts[:dna_class], :exact_times => opts[:exact_times], :extended => opts[:extended], :include_spotted_keywords => opts[:include_spotted_keywords], :keyword => opts[:keyword], :min_duration_secs => opts[:min_duration_secs], :spotted_keywords => { :agent => {opts[:agent_keywords]}, :caller => {opts[:caller_keywords]}}, opts[:status], opts[:subacct] }]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
 
 
+#{
+#"jsonrpc": "2.0",
+#"id": 1,
+#"method": "call.search",
+#"params": [
+#"account_id",
+#{"start": "string","end": "string","assto": "string","call_boundary": "string","callerid": "string","cmpid": "string","dispo": "string","dna_class": "string","exact_times": boolean,"extended": boolean,"grpid": "string","include_dna": boolean,"include_spotted_keywords": boolean,
+#"keyword": "string","min_duration_secs": integer,"spotted_keywords": {"agent": {217["string1", "string2", ... ]},"caller": {["string1", "string2", ... ]}},
+#"status": "string",
+#"subacct": boolean
+#}
+#]
+#}
 
