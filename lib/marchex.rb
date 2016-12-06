@@ -88,5 +88,15 @@ module Marchex
         return response.body["result"]
       end
 
+      def get_call (call_id)      
+        response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'call.get', 'params' => [call_id]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
+        return response.body["result"]
+      end
+
+      def get_call_audio(call_id, audio_format)
+        response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'call.audio', 'params' => [call_id, audio_format]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
+        return response.body["result"]
+      end
+
   end
 end
