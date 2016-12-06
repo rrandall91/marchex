@@ -10,7 +10,8 @@ require 'rest-client'
 
 module Marchex
   class Marchexapi
-  
+
+      #RestClient.log = 'stdout' #Debugging API calls
 
       def initialize(u, p)
         @url = 'https://userapi.voicestar.com/api/jsonrpc/1'
@@ -63,27 +64,29 @@ module Marchex
       end 
 
       def call_search ( opts = {})
-        response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'call.search', 'params' => [opts[:acct_id], {'start' => opts[:start_date], 'end' => opts[:end_date]} ]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
+        search_options = {}
+        search_options[:start] = opts[:start] if opts[:start] 
+        search_options[:end] = opts[:end] if opts[:end]
+        search_options[:assto] = opts[:assto] if opts[:assto]
+        search_options[:call_boundary] = opts[:call_boundary] if opts[:call_boundary]
+        search_options[:callerid] = opts[:callerid] if opts[:callerid]
+        search_options[:cmpid] = opts[:cmpid] if opts[:cmpid]
+        search_options[:dispo] = opts[:dispo] if opts[:dispo]
+        search_options[:dna_class] = opts[:dna_class] if opts[:dna_class]
+        search_options[:exact_times] = opts[:exact_times] if opts[:exact_times]
+        search_options[:extended] = opts[:extended] if opts[:extended]
+        search_options[:exact_times] = true if opts[:extended] == true
+        search_options[:grpid] = opts[:grpid] if opts[:grpid]
+        search_options[:include_dna] = opts[:include_dna] if opts[:include_dna]
+        search_options[:include_spotted_keywords] = opts[:include_spotted_keywords] if opts[:include_spotted_keywords]
+        search_options[:keyword] = opts[:keyword] if opts[:keyword]
+        search_options[:min_duration_secs] = opts[:min_duration_secs] if opts[:min_duration_secs]
+        search_options[:status] = opts[:status] if opts[:status]
+        search_options[:spotted_keywords] = opts[:spotted_keywords] if opts[:spotted_keywords]
+        search_options[:subacct] = opts[:subacct] if opts[:subacct]
+        response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'call.search', 'params' => [opts[:acct_id], search_options ]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
         return response.body["result"]
       end
 
   end
 end
-
- # response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'call.search', 'params' => [opts[:acc_id], :start => {opts[:start], :end => opts[:end], :assto => opts[:assto], :call_boundary => opts[:call_boundary], :callerid => opts[:callerid], :cmpid => opts[:cmpid], :dispo => opts[:dispo], :dna_class => opts[:dna_class], :exact_times => opts[:exact_times], :extended => opts[:extended], :include_spotted_keywords => opts[:include_spotted_keywords], :keyword => opts[:keyword], :min_duration_secs => opts[:min_duration_secs], :spotted_keywords => { :agent => {opts[:agent_keywords]}, :caller => {opts[:caller_keywords]}}, opts[:status], opts[:subacct] }]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
-
-
-#{
-#"jsonrpc": "2.0",
-#"id": 1,
-#"method": "call.search",
-#"params": [
-#"account_id",
-#{"start": "string","end": "string","assto": "string","call_boundary": "string","callerid": "string","cmpid": "string","dispo": "string","dna_class": "string","exact_times": boolean,"extended": boolean,"grpid": "string","include_dna": boolean,"include_spotted_keywords": boolean,
-#"keyword": "string","min_duration_secs": integer,"spotted_keywords": {"agent": {217["string1", "string2", ... ]},"caller": {["string1", "string2", ... ]}},
-#"status": "string",
-#"subacct": boolean
-#}
-#]
-#}
-
