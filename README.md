@@ -20,34 +20,43 @@ Or install it yourself as:
 
 ## Usage
 Create a connection using your Marchex account email address and password:
-
+```ruby
 @testcon = Marchex::Marchexapi.new("user@marchex.com", "password")
+```
+```@testcon.account_list ```
 
-# @testcon.account_list
     Retrieves all accounts       
 
-# @testcon.client_ad_list(client_id, status)
+``` @testcon.client_ad_list(client_id, status) ```
+
     Retrieves all ad campaigns for a client account. If disabled or active is passed for the status, only those ads will be returned. 
       
-# @testcon.ad_forward_list(campaign_id)
+``` @testcon.ad_forward_list(campaign_id) ```
+
     Retrieves all forwarding numbers for a single ad campaign
 
-# @testcon.ad_record_status(campaign_id)
+``` @testcon.ad_record_status(campaign_id) ```
+
     Checks if an ad campaign is set to record
        
-# @testcon.user_list(account_id)
+``` @testcon.user_list(account_id)```
+
     List all users in a client account
       
-# @testcon.user_permissions(user_id)
+``` @testcon.user_permissions(user_id) ```
+
     Grab permissions to see if a user is an admin
       
-# @testcon.ad_custom_define(acc_id,field_number, field_name, field_type, field_values)
+``` @testcon.ad_custom_define(acc_id,field_number, field_name, field_type, field_values) ```
+    
     Define a custom field for an ad 
 
-# @testcon.ad_custom_set(acc_id, campaign_id, field_name, field_value)   
+``` @testcon.ad_custom_set(acc_id, campaign_id, field_name, field_value)   ```
+ 
     Set the value of a custom field. For boolean, use yes/no
 
-# @testcon.call_search(search_options)
+``` @testcon.call_search(search_options) ```
+
         search_options = {}
         search_options[:acct_id] Required string. The unique, system-generated account ID of the specified account.
 
@@ -93,10 +102,12 @@ Create a connection using your Marchex account email address and password:
 
         search_options[:subacct] Optional boolean. true to search all calls in all client accounts of the specified parent account.
 
-# @testcon.get_call(call_id)
+``` @testcon.get_call(call_id) ```
+
     Return details for a single call
 
-# @testcon.get_call_audio(call_id, audio_format)
+``` @testcon.get_call_audio(call_id, audio_format) ```
+
     Gets a Base64-encoded string that contains the audio data of the specified call, in the specified format. (mp3 or wav)
 
 ## Development
