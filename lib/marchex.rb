@@ -11,24 +11,24 @@ require 'rest-client'
 module Marchex
   class Marchexapi
 
-      #RestClient.log = 'stdout' #Debugging API calls
+      RestClient.log = 'stdout' #Debugging API calls
 
       def initialize(u, p)
         @url = 'https://userapi.voicestar.com/api/jsonrpc/1'
-        $auth = 'Basic ' + Base64.encode64(u + ':' + p).chomp      
+        $auth = 'Basic ' + Base64.strict_encode64(u + ':' + p).chomp
       end
 
 
-      def account_list()
-        response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'acct.list', 'params' => [] }.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
-        
+      def account_list
+        response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'acct.list', 'params' => []}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
+
       end
 
       def client_ad_list(client_id, status ='')
         response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'ad.list.all', 'params' => [client_id, {'status' => status.downcase}]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
 
-      end  
-      
+      end
+
       def parse_json(response)
         body = JSON.parse(response.to_str) if response.code == 200
         OpenStruct.new(code: response.code, body: body)
@@ -36,7 +36,7 @@ module Marchex
 
       def ad_forward_list(campaign_id)
        response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'ad.forw.list', 'params' => [campaign_id]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
-      end 
+      end
 
       def ad_record_status(campaign_id)
        response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'ad.recordcall.get', 'params' => [campaign_id]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
@@ -61,11 +61,11 @@ module Marchex
       def ad_custom_set(acc_id, campaign_id, field_name, field_value)
         response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'ad.custom.set', 'params' => [acc_id,campaign_id, field_name, field_value]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
         return response.body["result"]
-      end 
+      end
 
       def call_search ( opts = {})
         search_options = {}
-        search_options[:start] = opts[:start] if opts[:start] 
+        search_options[:start] = opts[:start] if opts[:start]
         search_options[:end] = opts[:end] if opts[:end]
         search_options[:assto] = opts[:assto] if opts[:assto]
         search_options[:call_boundary] = opts[:call_boundary] if opts[:call_boundary]
@@ -88,7 +88,7 @@ module Marchex
         return response.body["result"]
       end
 
-      def get_call (call_id)      
+      def get_call (call_id)
         response = parse_json(RestClient.post(@url, {'jsonrpc' => '2.0', 'id' => '1', 'method' => 'call.get', 'params' => [call_id]}.to_json, :content_type => 'application/json', :accept => 'application/json', :Authorization => $auth))
         return response.body["result"]
       end
