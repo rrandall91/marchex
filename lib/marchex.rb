@@ -14,7 +14,7 @@ module Marchex
       RestClient.log = 'stdout' #Debugging API calls
 
       def initialize(u, p)
-        @url = 'https://userapi.voicestar.com/api/jsonrpc/1'
+        @url = 'https://api.marchex.io/api/jsonrpc/1'
         $auth = 'Basic ' + Base64.strict_encode64(u + ':' + p).chomp
       end
 
